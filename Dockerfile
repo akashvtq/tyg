@@ -37,7 +37,7 @@ WORKDIR /var/www/html
 # Scripts are skipped: artisan needs the database (AppServiceProvider reads settings at boot),
 # so package discovery runs at container start instead (docker/start.sh).
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress --no-audit
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress
 
 COPY . .
 RUN composer dump-autoload --optimize --no-dev --no-scripts \
