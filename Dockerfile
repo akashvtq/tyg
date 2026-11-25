@@ -16,7 +16,8 @@ RUN apt-get update \
  && a2enmod rewrite headers expires \
  && rm -rf /var/lib/apt/lists/*
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Pinned to the Composer line that installs this composer.lock as-is (verified locally with 2.9).
+COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 
 # PHP settings for production
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-tyg.ini
@@ -30,12 +31,13 @@ RUN sed -ri 's/^Listen 80$/Listen ${PORT}/' /etc/apache2/ports.conf \
 
 WORKDIR /var/www/html
 
-# Install PHP dependencies first (better layer caching). There is no composer.lock in the repo,
-# so versions are resolved here; commit a composer.lock to pin them.
+# Install PHP dependencies first (better layer caching), exactly as pinned in composer.lock.
+# The lock deliberately stays on Laravel 10.50.5 (latest 10.x); its remaining advisories are fixed
+# only in Laravel 12.60+ — upgrade, then regenerate the lock.
 # Scripts are skipped: artisan needs the database (AppServiceProvider reads settings at boot),
 # so package discovery runs at container start instead (docker/start.sh).
-COPY composer.json composer.lock* ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --no-progress --no-audit
 
 COPY . .
 RUN composer dump-autoload --optimize --no-dev --no-scripts \
