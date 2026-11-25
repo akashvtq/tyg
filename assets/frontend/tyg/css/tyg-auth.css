@@ -1,0 +1,62 @@
+/* TYG skin for the auth pages (layouts/user/auth.blade.php): login, register, forgot/reset password, 2FA.
+   Tabler (user-dashboard.css) still provides layout; this re-themes it. */
+body.tyg-auth {
+    --cream: #fdf5ea; --cream-2: #fbefdf; --ink: #211f28; --red: #b9342b; --red-2: #d2463b;
+    --green: #d9e6c5; --pink: #fdd9d5;
+    --tblr-primary: #b9342b; --tblr-primary-rgb: 185, 52, 43; --tblr-primary-fg: #fff;
+    --tblr-link-color: #b9342b; --tblr-link-color-rgb: 185, 52, 43; --tblr-link-hover-color: #8e271f;
+    --tblr-font-sans-serif: 'Poppins', system-ui, sans-serif;
+    --tblr-body-color: #211f28; --tblr-body-bg: #fdf5ea; --tblr-border-color: rgba(33, 31, 40, .18);
+    position: relative; min-height: 100vh; overflow-x: hidden;
+    background: var(--cream) !important; color: var(--ink); font-family: 'Poppins', system-ui, sans-serif;
+}
+.tyg-auth__blob { position: fixed; z-index: 0; border-radius: 50%; pointer-events: none; }
+.tyg-auth__blob--green { width: 560px; height: 560px; right: -180px; top: -200px; background: var(--green); }
+.tyg-auth__blob--pink { width: 320px; height: 320px; left: -120px; bottom: -140px; background: var(--pink); }
+.tyg-auth .page { position: relative; z-index: 1; background: transparent; }
+
+.tyg-auth__logo {
+    display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 12px;
+    background: var(--red); color: #fff !important; text-decoration: none !important;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.35rem; letter-spacing: -.04em;
+    border: 1.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform .35s, box-shadow .35s;
+}
+.tyg-auth__logo:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.tyg-auth__back { margin-top: 22px; text-align: center; font-size: .9rem; }
+.tyg-auth__back a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.tyg-auth__back a:hover { color: var(--red); }
+
+.tyg-auth .card {
+    background: #fffaf3; border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 7px 7px 0 var(--ink);
+}
+.tyg-auth .card-body { padding: 34px 34px 30px; }
+.tyg-auth h2, .tyg-auth .h2 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -.01em;
+    font-size: 1.7rem; color: var(--ink);
+}
+.tyg-auth .text-muted, .tyg-auth .text-secondary { color: #6f6a72 !important; }
+.tyg-auth .form-label { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--ink); }
+.tyg-auth .form-control, .tyg-auth .form-select {
+    background: #fff; border: 1.5px solid var(--ink); border-radius: 12px; color: var(--ink); padding-block: .6rem;
+}
+.tyg-auth .input-group-flat .form-control { border-radius: 0 12px 12px 0; }
+.tyg-auth .input-group-flat .input-group-text { background: #fff; border: 1.5px solid var(--ink); }
+.tyg-auth .input-group-flat .input-group-text:first-child { border-right: 0; border-radius: 12px 0 0 12px; }
+.tyg-auth .input-group-flat .input-group-text:last-child { border-left: 0; border-radius: 0 12px 12px 0; }
+.tyg-auth .input-group-flat .form-control:not(:last-child) { border-right: 0; border-radius: 0; }
+.tyg-auth .input-group-flat:focus-within { box-shadow: 3px 3px 0 var(--red); border-radius: 12px; }
+.tyg-auth .input-group-flat:focus-within :is(.form-control, .input-group-text) { border-color: var(--red); }
+.tyg-auth .form-control:focus { box-shadow: none; border-color: var(--red); }
+.tyg-auth .form-check-input:checked { background-color: var(--red); border-color: var(--red); }
+
+.tyg-auth .btn-primary, .tyg-auth .btn[type="submit"] {
+    background: var(--red); border: 1.5px solid var(--ink); color: #fff; border-radius: 999px;
+    padding: .75rem 1.4rem; font-weight: 600; box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .3s, box-shadow .3s;
+}
+.tyg-auth .btn-primary:hover, .tyg-auth .btn[type="submit"]:hover { background: #a92d25; box-shadow: 5px 5px 0 var(--ink); color: #fff; }
+.tyg-auth .btn-primary:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.tyg-auth .btn:not(.btn-primary):not([type="submit"]) { border-radius: 999px; border: 1.5px solid var(--ink); }
+.tyg-auth a:not(.btn):not(.tyg-auth__logo) { color: var(--red); }
+.tyg-auth .hr-text { color: #6f6a72; }
+.tyg-auth .alert { border-radius: 14px; border: 1.5px solid var(--ink); }

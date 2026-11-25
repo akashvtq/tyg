@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://buildsaaslinks.com/sitemap.xml
+Sitemap: https://buildsaaslinks.com/sitemap-seo.xml

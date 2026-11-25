@@ -1,0 +1,234 @@
+/* =========================================================
+   TYG skin for legacy public pages (layouts/app.blade.php)
+   Old template CSS (style.css / bootstrap) still provides layout;
+   this file re-themes it with the TYG palette, type and shapes.
+   Loaded after style.css + tyg.css.
+   ========================================================= */
+
+/* ---------- Old theme tokens -> TYG palette ---------- */
+:root:root, :root[data-theme] {
+    --primary-color: #b9342b;
+    --primary10: rgba(185, 52, 43, .1);
+    --gradient-bg: #b9342b;
+    --secondary-color: #211f28;
+    --theme-color: #b9342b;
+    --main-bg: #fdf5ea;
+    --sub-bg: #fbefdf;
+    --heading-color: #211f28;
+    --paragraph: #4a4550;
+    --span: #6f6a72;
+    --border: rgba(33, 31, 40, .14);
+    --border-1px: 1px solid rgba(33, 31, 40, .14);
+    --border-2px: 2px solid rgba(33, 31, 40, .14);
+    --shadow: 0 20px 40px -28px rgba(33, 31, 40, .45);
+    --kumbh: 'Montserrat', system-ui, sans-serif;
+    --bs-primary: #b9342b;
+    --bs-primary-rgb: 185, 52, 43;
+    --bs-link-color: #b9342b;
+    --bs-body-font-family: 'Poppins', system-ui, sans-serif;
+}
+
+body.tyg-legacy {
+    background: var(--cream) !important;
+    color: var(--ink) !important;
+    font-family: var(--body) !important;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+.tyg-legacy main { min-height: 50vh; }
+/* home.css forces `h1..h6 { font-family: 'Kumbh Sans' !important }` site-wide — beat it here */
+.tyg-legacy main :is(h1, h2, h3, h4, h5, h6) { font-family: var(--display) !important; color: var(--ink); letter-spacing: -.01em; }
+.tyg-legacy .tyg-chrome :is(h1, h2, h3, h4, h5, h6) { font-family: var(--display) !important; }
+.tyg-legacy .tyg-footer h6 { font-family: var(--body) !important; }
+.tyg-legacy main :is(h1, h2) { font-weight: 900; }
+.tyg-legacy main :is(h3, h4) { font-weight: 800; }
+.tyg-legacy main p { color: #4a4550; }
+.tyg-legacy main a:hover { color: var(--red); }
+.tyg-legacy ::selection { background: var(--red); color: #fff; }
+.tyg-legacy .primary-color, .tyg-legacy .primary-hover:hover { color: var(--red) !important; }
+.tyg-legacy .sub-bg { background-color: var(--cream-2) !important; }
+.tyg-legacy .secondary-bg { background-color: var(--ink) !important; }
+.tyg-legacy .bg-white { background-color: #fffaf3 !important; }
+
+.tyg-legacy-stub, .tyg-legacy-stub * { display: none !important; }
+
+/* ---------- Protect the TYG chrome from old global rules (span/li/a/br/margins) ---------- */
+/* :where() keeps these at element specificity: they beat style.css's bare `span`/`a`/`br` rules
+   (loaded earlier) but lose to every TYG component class. */
+:where(.tyg-chrome) span { display: revert; color: inherit; }
+:where(.tyg-chrome) a { display: revert; transition: none; }
+:where(.tyg-chrome) li { list-style: none; }
+:where(.tyg-chrome) br { display: revert; }
+:where(.tyg-chrome) h6 { font-family: var(--display); }
+:where(.tyg-chrome) input { font: inherit; }
+
+/* ---------- Page banner / breadcrumb -> TYG page hero ---------- */
+.tyg-legacy .banner__inner-page {
+    position: relative; overflow: hidden;
+    background: var(--cream) none !important;
+    padding: 170px 0 70px !important;
+    text-align: center;
+    border-bottom: 1.5px solid var(--ink);
+}
+.tyg-legacy .banner__inner-page::before {
+    content: ''; position: absolute; z-index: 0; width: 520px; aspect-ratio: 1; border-radius: 50%;
+    background: var(--green); right: -140px; top: -180px;
+}
+.tyg-legacy .banner__inner-page::after {
+    content: ''; position: absolute; z-index: 0; width: 260px; aspect-ratio: 1; border-radius: 50%;
+    background: var(--pink); left: -90px; bottom: -150px;
+}
+.tyg-legacy .banner__inner-page .container { position: relative; z-index: 1; }
+.tyg-legacy .banner__inner-page h2 {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: clamp(2.4rem, 6vw, 5rem) !important; line-height: .95 !important; color: var(--ink) !important;
+}
+.tyg-legacy .banner__inner-page .breadcrumb-list { margin-top: 22px; display: inline-flex; align-items: center; gap: 4px; padding: 8px 18px; border: 1.5px solid var(--ink); border-radius: 999px; background: #fffaf3; box-shadow: 3px 3px 0 var(--ink); }
+.tyg-legacy .banner__inner-page .breadcrumb-list a { color: var(--red) !important; font-weight: 600; }
+.tyg-legacy .banner__inner-page .breadcrumb-list span, .tyg-legacy .banner__inner-page .breadcrumb-list i { color: var(--ink) !important; }
+
+/* Pages whose first section is not the banner still need room under the fixed header */
+.tyg-legacy main > :first-child:not(.banner__inner-page, style, script) { padding-top: 130px !important; }
+.tyg-legacy main > style:first-child + * { padding-top: 130px !important; }
+
+/* ---------- Section headings ---------- */
+.tyg-legacy .section-header h5,
+.tyg-legacy .section-header .sub-title {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--body); font-weight: 600; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--red) !important;
+}
+.tyg-legacy .section-header h5 img, .tyg-legacy .section-header h5 svg { display: none; }
+.tyg-legacy .section-header h2 {
+    margin-top: 10px; font-weight: 900; text-transform: uppercase;
+    font-size: clamp(1.9rem, 3.6vw, 3.1rem) !important; line-height: 1.02 !important; color: var(--ink) !important;
+}
+.tyg-legacy .section-header p { margin-top: 16px; }
+
+/* ---------- Buttons -> TYG pill buttons ---------- */
+.tyg-legacy main :is(.btn-one, .common-btn, .case__btn, .bsl-btn, .btn-primary, .theme-btn),
+.tyg-legacy .cookies-wrapper .btn-one {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 26px; border-radius: 999px !important;
+    background: var(--red) !important; color: #fff !important;
+    font-family: var(--body); font-weight: 600; font-size: .95rem; text-transform: none;
+    border: 1.5px solid var(--ink) !important; box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.tyg-legacy main :is(.btn-one, .common-btn, .case__btn, .bsl-btn, .btn-primary, .theme-btn)::before,
+.tyg-legacy main :is(.btn-one, .common-btn, .case__btn, .bsl-btn, .btn-primary, .theme-btn)::after,
+.tyg-legacy .cookies-wrapper .btn-one::before, .tyg-legacy .cookies-wrapper .btn-one::after { display: none !important; }
+.tyg-legacy main :is(.btn-one, .common-btn, .case__btn, .bsl-btn, .btn-primary, .theme-btn):hover { box-shadow: 5px 5px 0 var(--ink); color: #fff !important; }
+.tyg-legacy main :is(.btn-one, .common-btn, .case__btn, .bsl-btn, .btn-primary, .theme-btn):active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.tyg-legacy main :is(.btn-one, .common-btn) span, .tyg-legacy main :is(.btn-one, .common-btn) i { color: inherit !important; }
+.tyg-legacy main :is(.btn-dark, .btn-secondary) { background: var(--ink) !important; color: var(--cream) !important; border-radius: 999px; border: 1.5px solid var(--ink); }
+.tyg-legacy main .btn-outline-secondary { border-radius: 999px; border-color: var(--ink); color: var(--ink); }
+.tyg-legacy main .read-more-btn, .tyg-legacy main .read-more-btn span, .tyg-legacy main .read-more-btn i { color: var(--red) !important; font-weight: 600; }
+
+/* ---------- Cards / items ---------- */
+.tyg-legacy main :is(.blog__item, .blog-two__grid-item, .service__item, .service-two__item, .service-three__item, .service-item,
+    .case__item, .case-two__item, .project-three__item, .team__item, .offer-item, .testimonial__item, .testimonial-two__item,
+    .testimonial-three__item, .talk-us__item, .bsl-card, .card, .about__right-item, .process__item) {
+    background: #fffaf3; border: 1.5px solid var(--ink) !important; border-radius: 18px !important;
+    box-shadow: 5px 5px 0 var(--ink); overflow: hidden;
+    transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.tyg-legacy main :is(.blog__item, .blog-two__grid-item, .service__item, .service-two__item, .service-three__item, .service-item,
+    .case__item, .case-two__item, .project-three__item, .team__item, .offer-item, .bsl-card):hover {
+    transform: translateY(-6px); box-shadow: 8px 10px 0 var(--ink);
+}
+.tyg-legacy main .card .card-body { background: transparent; }
+.tyg-legacy main :is(.blog__item, .blog-two__grid-item) img { border-radius: 0; }
+
+/* ---------- Forms ---------- */
+.tyg-legacy main :is(input[type=text], input[type=email], input[type=tel], input[type=number], input[type=password], input[type=search], input[type=url], textarea, select, .form-control, .form-select, .nice-select) {
+    background: #fffaf3 !important; color: var(--ink) !important;
+    border: 1.5px solid var(--ink) !important; border-radius: 12px !important;
+    font-family: var(--body); box-shadow: none;
+}
+.tyg-legacy main :is(input, textarea, select, .form-control, .form-select):focus {
+    outline: none; box-shadow: 3px 3px 0 var(--red) !important; border-color: var(--red) !important;
+}
+.tyg-legacy main label, .tyg-legacy main .form-label { font-family: var(--display); font-weight: 700; color: var(--ink); }
+.tyg-legacy main ::placeholder { color: #8b8590; }
+
+/* ---------- Contact page ---------- */
+.tyg-legacy .contact-area .contact__left-item, .tyg-legacy .contact-area [class*="contact__left"] {
+    background: var(--green) !important; border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink);
+}
+.tyg-legacy .contact-area [class*="contact__"] .icon, .tyg-legacy .contact-area [class*="contact__"] .icon-box {
+    background: var(--red) !important; border-color: var(--ink) !important;
+}
+.tyg-legacy .contact__map iframe { filter: grayscale(.6) sepia(.15); }
+
+/* ---------- FAQ / accordion ---------- */
+.tyg-legacy main .accordion-item { background: #fffaf3; border: 1.5px solid var(--ink) !important; border-radius: 14px !important; margin-bottom: 14px; overflow: hidden; box-shadow: 3px 3px 0 var(--ink); }
+.tyg-legacy main .accordion-button { font-family: var(--display); font-weight: 700; color: var(--ink) !important; background: transparent !important; box-shadow: none !important; }
+.tyg-legacy main .accordion-button:not(.collapsed) { color: var(--red) !important; }
+.tyg-legacy main .accordion-body { color: #4a4550; }
+
+/* ---------- Pagination / badges / misc ---------- */
+.tyg-legacy main .pagination .page-link, .tyg-legacy main .pagi-wrp a, .tyg-legacy main .pagi-wrp span {
+    border: 1.5px solid var(--ink) !important; border-radius: 10px !important; color: var(--ink) !important; background: #fffaf3 !important; margin: 0 3px;
+}
+.tyg-legacy main .pagination .active .page-link, .tyg-legacy main .pagi-wrp .active { background: var(--red) !important; color: #fff !important; }
+.tyg-legacy main .badge.bg-primary, .tyg-legacy main .bg-primary { background-color: var(--red) !important; }
+.tyg-legacy main .text-primary { color: var(--red) !important; }
+.tyg-legacy main blockquote { border-left: 4px solid var(--red); background: var(--cream-2); padding: 18px 22px; border-radius: 0 14px 14px 0; }
+
+/* ---------- Cookie consent ---------- */
+.tyg-legacy .cookies-wrapper {
+    background: #fffaf3 !important; border: 1.5px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--ink);
+    font-family: var(--body);
+}
+.tyg-legacy .cookies-wrapper .title-box h3 { font-family: var(--display); font-weight: 800; color: var(--ink); }
+.tyg-legacy .cookies-wrapper .title-box svg { color: var(--red); fill: currentColor; }
+.tyg-legacy .cookies-wrapper .info a { color: var(--red) !important; }
+.tyg-legacy .cookies-wrapper .buttons .btn-one + .btn-one { background: var(--cream) !important; color: var(--ink) !important; }
+
+/* ---------- Old preloader & scroll-top: match palette ---------- */
+.tyg-legacy #preloader, .tyg-legacy .loading { background: var(--cream) !important; }
+.tyg-legacy .loading span { color: var(--red) !important; font-family: var(--display); }
+.tyg-legacy .scroll-up { background: var(--red) !important; }
+
+@media (max-width: 900px) {
+    .tyg-legacy .banner__inner-page { padding: 130px 0 50px !important; }
+    .tyg-legacy .banner__inner-page::before { width: 280px; right: -110px; top: -120px; }
+    .tyg-legacy main > :first-child:not(.banner__inner-page) { padding-top: 110px !important; }
+}
+
+/* ---------- Generated: old template hard-coded purple/blue -> TYG red (from style.css + home.css) ---------- */
+.tyg-legacy .search-wrap { background: rgba(185, 52, 43, 0.9) !important; }
+.tyg-legacy .header-area::after { background: linear-gradient(270deg, #b9342b 6.32%, #00060c 216.42%) !important; }
+.tyg-legacy .header-two-area.menu-fixed { background: #b9342b !important; }
+.tyg-legacy .header-three-area.menu-fixed { background: linear-gradient(90deg, #0f0d1d -76.72%, #b9342b 191.51%) !important; }
+.tyg-legacy .header-three-area .header__main .main-menu ul li a::after { background: linear-gradient(0.49deg, #b9342b -126.52%, rgba(185, 52, 43, 0) 92.35%) !important; }
+.tyg-legacy .service-three__up-content .icon { background: linear-gradient(180deg, #b9342b -93.57%, #00060c 228.57%) !important; }
+.tyg-legacy .service-three__item::before { background: linear-gradient(180deg, #b9342b -21.56%, #00060c 252.19%) !important; }
+.tyg-legacy .case-two__item::after { background: linear-gradient(0deg, #b9342b 0%, rgba(0, 0, 0, 0) 100%) !important; }
+.tyg-legacy .offer__icon { background: linear-gradient(180deg, #b9342b -210.71%, #00060c 100%) !important; }
+.tyg-legacy .blog__image .blog-tag { background: #b9342b !important; }
+.tyg-legacy .blog-single__right-item .item .serach-bar input:focus, .tyg-legacy .service-single__right-item .item .serach-bar input:focus { border: 1px solid #b9342b !important; }
+.tyg-legacy .pricing__item { background: linear-gradient(180deg, #b9342b -1.09%, #00060c 175.27%) !important; }
+.tyg-legacy .bg-gradient { background: linear-gradient(90deg, #0f0d1d -76.72%, #b9342b 191.51%) !important; }
+.tyg-legacy .theme-bg-color { background-color: #b9342b !important; }
+.tyg-legacy .theme-text-color { color: #b9342b !important; }
+.tyg-legacy .common-btn, .tyg-legacy .btn-one { background: #b9342b !important; }
+.tyg-legacy .banner-left-div .bolder { color: #b9342b !important; }
+.tyg-legacy .pricing .bolder, .tyg-legacy .logo-banner .bolder { color: #b9342b !important; }
+.tyg-legacy .js-focus-visible .vjs-menu li.vjs-selected:hover span, .tyg-legacy .vjs-menu li.vjs-selected span, .tyg-legacy .vjs-menu li.vjs-selected:focus span, .tyg-legacy .vjs-menu li.vjs-selected:hover span { color: #b9342b !important; }
+.tyg-legacy .bolder, .tyg-legacy .banner-left-div .bolder, .tyg-legacy .pricing .bolder, .tyg-legacy .logo-banner .bolder { color: #b9342b !important; }
+.tyg-legacy a:hover { color: #8e271f !important; }
+.tyg-legacy .header-area .main-menu ul li a:hover { color: #8e271f !important; }
+.tyg-legacy .common-btn, .tyg-legacy .btn-one { background: #b9342b !important; border: 1px solid #b9342b !important; }
+.tyg-legacy .common-btn:hover, .tyg-legacy .btn-one:hover, .tyg-legacy .header-two-area.menu-fixed .common-btn:hover { background: #8e271f !important; border-color: #8e271f !important; }
+.tyg-legacy .header-two-area.menu-fixed .common-btn { background: #b9342b !important; }
+.tyg-legacy .proof-performance table .badge { color: #8e271f !important; }
+.tyg-legacy .proof-performance table .graph-text { color: #8e271f !important; }
+.tyg-legacy .cs-swiper-button-prev:hover, .tyg-legacy .cs-swiper-button-next:hover { border-color: #b9342b !important; color: #b9342b !important; }
+.tyg-legacy .how_we_do_it .card:hover { border: 1px solid #b9342b !important; }
+.tyg-legacy .watch_now { border: 1px solid #b9342b !important; color: #8e271f !important; }
+.tyg-legacy .watch_now:hover { color: #8e271f !important; }
+.tyg-legacy .header-area .header__main .main-menu ul li a:hover, .tyg-legacy .header-two-area .header__main .main-menu ul li a:hover { color: #8e271f !important; }
+.tyg-legacy main ~ .container-fluid a:hover, .tyg-legacy main ~ .footer-container a:hover { color: #8e271f !important; }
