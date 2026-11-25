@@ -10,9 +10,12 @@ class TrustProxies extends Middleware
     /**
      * The trusted proxies for this application.
      *
+     * Render (and most PaaS hosts) terminate HTTPS at a load balancer whose IP is not fixed,
+     * so trust the forwarded headers from any proxy — otherwise Laravel builds http:// URLs.
+     *
      * @var array<int, string>|string|null
      */
-    protected $proxies;
+    protected $proxies = '*';
 
     /**
      * The headers that should be used to detect proxies.

@@ -1,0 +1,69 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# New → Blueprint → pick this repo. Render builds the Dockerfile and asks for every `sync: false` value.
+#
+# Database: Render has no managed MySQL. Point DB_* at an external MySQL 8 (e.g. Aiven, Railway,
+# TiDB Cloud, your own VPS) and import DB/gratech.sql (or your current local dump) into it first.
+services:
+  - type: web
+    name: tyg
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free            # free sleeps after inactivity; use starter or higher for production + disks
+    healthCheckPath: /robots.txt
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: There You Grow
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY            # php artisan key:generate --show  (copy the base64:… value)
+        sync: false
+      - key: APP_URL            # e.g. https://tyg.onrender.com or your custom domain
+        sync: false
+      - key: ASSET_URL
+        value: /assets
+      - key: JS_VERSION
+        value: "1.0.20"
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: warning
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: CACHE_DRIVER
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: MAIL_MAILER
+        value: log
+      # One-off switches read by docker/start.sh — set to "true" for a deploy, then back to "false"
+      - key: RUN_MIGRATIONS
+        value: "false"
+      - key: RUN_SEEDERS
+        value: "false"
+
+    # Uploaded images (logos, blog/SEO-page images…) are written to assets/general/images, which is
+    # not in git and is wiped on every deploy. Uncomment to keep them on a persistent disk
+    # (needs a paid instance type, e.g. plan: starter).
+    # disk:
+    #   name: uploads
+    #   mountPath: /var/www/html/assets/general/images
+    #   sizeGB: 2
